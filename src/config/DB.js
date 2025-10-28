@@ -10,19 +10,4 @@ const db =  mysql.createPool({
 });
 console.log('Conectado a la base de datos✔️​​');
 
-/* db.connect().then(() => {
-    console.log('Conectado a la base de datos✔️​​');
-})
-.catch((err) => {
-    console.error('no se pudo conectar a la base de datos ❌​:', err);
-}); */
-
-/* db.connect((err) => {
-    if (err) {
-        console.error('no se pudo conectar a la base de datos ❌​:', err);
-        return;
-    }
-    console.log('Conectado a la base de datos✔️​​');
-}); */
-
 module.exports = db;
