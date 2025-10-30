@@ -14,12 +14,12 @@ const getcomment =  async (req, res) => {
 const postcomment = async (req, res) =>{
     try {
         const { comment , user_id} = req.body;
-            if (!comment) {
-                return res.status(400).json({ msg: 'El campo "comment" es requerido' });
+            if (!comment || !user_id) {
+                return res.status(400).json({ msg: 'los campos "comment y user" son requeridos' });
     }
-    if (!user_id) {
+/*    if (!user_id) {
         return res.status(400).json({ msg: 'El campo "user_id" es requerido' });
-}
+} */
     const [resultado] = await db.query('INSERT INTO comments (comment) VALUES (?)',
         [comment]);
             res.status(201).json({msg: 'Comentario agregado correctamente',id_insertado: resultado.insertId});

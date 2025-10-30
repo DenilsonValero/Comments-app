@@ -3,6 +3,7 @@ import Router from 'express';
 const router = Router();
 const { getcomment, postcomment, putcomment, deletecomment } = require('../controllers/commentsC.js');
 
+
 router.get('/', getcomment);
 router.post('/', postcomment);
 router.put('/:id', putcomment);
