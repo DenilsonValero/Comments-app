@@ -6,7 +6,7 @@ dotenv.config();
 const auth = (req, res, next) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
     if (!token) {
-        return res.status(401).json({ msg: 'No hay token, authorizacion denegada' });
+        return res.status(401).json({ msg: 'No hay token, autorizacion denegada' });
     }
     try {
         const verificar = jwt.verify(token, SECRET_KEY);
