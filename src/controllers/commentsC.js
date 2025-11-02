@@ -1,74 +1,31 @@
-const db = require('../config/DB.js');
+import db from "../config/db.js";
+import { insertComment } from "../operations/commentOperations.js";
 
-const getcomment =  async (req, res) => {
-    try {
-        const [comentarios] = await db.query('SELECT * FROM comments');
-            res.status(200).json({ msg: 'comentarios obtenidos', data: comentarios});
-    }
-    catch (err) {
-        console.error(err.message);
-            res.status(500).json({ msg: 'Server Error',err });
-        }
-};
+export const addComment = async (req, res) => {
+  try {
+    const commentData = req.body;
+    const userId = parseInt(req.params.id, 10);
 
-const postcomment = async (req, res) =>{
-    try {
-        const { comment , user_id} = req.body;
-            if (!comment || !user_id) {
-                return res.status(400).json({ msg: 'los campos "comment y user" son requeridos' });
+    if (isNaN(userId)) {
+     return res.status(400).json({ error: "Invalid or missing user ID" });
     }
-/*    if (!user_id) {
-        return res.status(400).json({ msg: 'El campo "user_id" es requerido' });
-} */
-    const [resultado] = await db.query('INSERT INTO comments (comment) VALUES (?)',
-        [comment]);
-            res.status(201).json({msg: 'Comentario agregado correctamente',id_insertado: resultado.insertId});
-        } 
-catch (err) {
-    console.error(err.message);
-        res.status(500).json({ msg: 'Server Error',err });
-    }
-};
 
-const putcomment = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { comment } = req.body;
-            if (!comment) {
-                return res.status(400).json({ msg: 'El campo "comment" es requerido' });
+    if (!commentData || Object.keys(commentData).length === 0) {
+      return res.status(400).json({ error: "No comment data provided" });
     }
-    const [resultado]= await db.query("UPDATE comments SET comment= ? WHERE idcomments = ?",
-        [comment, id]);
-            if (resultado.affectedRows === 0) {
-                return res.status(404).json({ msg: 'el comentaro no fue encontrado o no existe' });
-    }
-    res.status(200).json({msg:"comentario actualizado correctamente"});
-    }
-    catch(err){
-        console.error(err);
-        res.status(500).json({msg:"error del servidor", err});
 
+    if (!commentData.comment_text || commentData.comment_text.trim() === "") {
+    return res.status(400).json({ error: "Comment text is required" });
     }
-};
 
-const deletecomment = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const [resultado] = await db.query('DELETE FROM comments WHERE idcomments = ?',
-            [id]);
-            if(resultado.affectedRows === 0){
-                return res.status(404).json({ msg: 'el comentario no fue encontrado o no existe' });
-    }
-        res.status(200).json({ msg: 'comentario eliminado correctamente' });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ msg: 'Server Error', err });
-    }
-};
+    const results = await insertComment(db, commentData, userId);
 
-module.exports = {
-    getcomment,
-    postcomment,
-    putcomment,
-    deletecomment
-};
+    res.status(201).json({
+      message: "✅ Comment added successfully",
+      commentId: results.insertId,
+    });
+
+  } catch (error) {
+    res.status(500).json({ error: "Error inserting comment" });
+  }
+}
