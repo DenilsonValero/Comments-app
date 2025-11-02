@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import commentsRouter from './routers/comments.js';
-/* import userRouter from './routers/user.js'; */
+import userRouter from './routers/user.js';
 
 // Rutas absolutas y dotenv
 const __filename = fileURLToPath(import.meta.url);
@@ -22,12 +22,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rutas
 app.use('/comments', commentsRouter);
-/* app.use('/users', userRouter); */
+app.use('/users', userRouter);
 
 app.get('/', (req, res) => {
-  res.send('Servidor funcionando correctamente');
+    res.send('Servidor funcionando correctamente');
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Servidor iniciado en: http://localhost:${PORT}`);
+    console.log(`✅ Servidor iniciado en: http://localhost:${PORT}`);
 });

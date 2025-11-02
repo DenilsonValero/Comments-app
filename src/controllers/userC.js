@@ -1,7 +1,7 @@
-const db =require('../config/DB.js');
-const bcrypt= require('bcryptjs');
+import db from "../config/db.js";
+import bcrypt from 'bcryptjs';
 
-const getUser= async (req,res)=>{
+export const getUser= async (req,res)=>{
     try{
         const [users]= await db.query("SELECT * FROM user")
         res.status(200).json({msg:"usuarios" , data:users})
@@ -15,7 +15,7 @@ const getUser= async (req,res)=>{
 }
 
 
-const register= async (req,res)=>{
+export const register= async (req,res)=>{
     const {name,email,password}= req.body;
     try{
         const[existinguser]= await db.query("SELECT * FROM user WHERE email= ?", [email]);
@@ -31,7 +31,7 @@ const register= async (req,res)=>{
         res.status(500).json({msg:"error en el servidor",err})
     }
 }
-const login= async (req,res)=>{
+export const login= async (req,res)=>{
     const {email,password}=req.body;
     try{
         const[existinguser]= await db.query("SELECT * FROM user WHERE email= ?", [email]);
@@ -51,6 +51,5 @@ const login= async (req,res)=>{
 }
 
 
-module.exports={getUser,register,login};
 
 
