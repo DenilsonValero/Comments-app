@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const SECRET_KEY = process.env.SECRET_KEY || '2025jwtdev';
+const SECRET_KEY = process.env.SECRET_KEY || 'your_secret_key';
+const hash = require('bcryptjs');
 dotenv.config();
 
 const auth = (req, res, next) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
     if (!token) {
-        return res.status(401).json({ msg: 'No hay token, autorizacion denegada' });
+        return res.status(401).json({ msg: 'No token, authorization denied' });
     }
     try {
         const verificar = jwt.verify(token, SECRET_KEY);
