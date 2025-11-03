@@ -6,6 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import commentsRouter from './routers/comments.js';
 import userRouter from './routers/user.js';
+import reactionRouter from './routers/reactionRouter.js';
 
 // Rutas absolutas y dotenv
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 // Rutas
 app.use('/comments', commentsRouter);
 app.use('/users', userRouter);
+app.use('/reactions', reactionRouter);
 
 app.get('/', (req, res) => {
     res.send('Servidor funcionando correctamente');
