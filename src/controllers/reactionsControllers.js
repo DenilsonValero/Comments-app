@@ -1,4 +1,4 @@
-import db from '../config/db.js';
+import db from '../config/DB.js';
 
 // ✅ Crear o actualizar reacción (LIKE / DISLIKE)
 export const toggleReaction = async (req, res) => {
