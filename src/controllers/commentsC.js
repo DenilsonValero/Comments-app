@@ -1,5 +1,5 @@
 import e from "express";
-import db from "../config/db.js";
+import db from "../config/DB.js";
 import { insertComment, readComments, updateComment, deleteComment } from "../operations/commentOperations.js";
 
 export const addComment = async (req, res) => {

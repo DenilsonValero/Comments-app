@@ -1,4 +1,4 @@
-import db from "../config/db.js";
+import db from "../config/DB.js";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
 const SECRET_KEY = process.env.SECRET_KEY || "2025jwtdev";
