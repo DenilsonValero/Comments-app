@@ -81,11 +81,11 @@ export const removeComment = async (req, res) => {
       return res.status(400).json({ error: "Invalid or missing comment ID" });
     }
 
-    const results = await deleteComment(db, commentId);
+    const result = await deleteComment(db, commentId);
 
     res.status(200).json({
       message: "✅ Comment deleted successfully",
-      affectedRows: results.affectedRows,
+      affectedRows: result.affectedRows,
     });
   } catch (error) {
     res.status(500).json({ error: "Error deleting comment" });
